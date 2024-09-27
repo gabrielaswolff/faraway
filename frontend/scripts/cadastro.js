@@ -6,32 +6,41 @@ document.getElementById('formulario').addEventListener('submit', async (event) =
     const password = document.getElementById('password').value;
     const cpf_number = document.getElementById('cpf_number').value;
 
+    const data = { name, email, password, cpf_number };
+    
     try {
         const response = await fetch('http://localhost:3007/usuario/cadastrar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, password, cpf_number }),
+            body: JSON.stringify(data),
         });
 
-        const data = await response.json();
+        const results = await response.json();
 
-        if (data.success) {
-            alert(data.message);
-            window.location.href = "/frontend/html/index.html";
+        if (results.success) {
+            
+            localStorage.setItem('informacoes', JSON.stringify(results.data));
+
+           
+            let html = document.getElementById('informacoes');
+            let dados = JSON.parse(localStorage.getItem('informacoes'));
+
+            html.innerHTML = `<div style="display: flex; flex-direction: column; align-items: end">
+                                ${dados.perfil} 
+                                ${dados.email} 
+                              </div>`;
+
+            html.style.display = 'block';
+
+
+            alert(results.message);
         } else {
-            alert(data.message);
+            alert(results.message);
         }
     } catch (error) {
-        console.error('Erro:', error);
-        alert('erro ao cadastrar usuario.');
+        console.error('erro', error);
+        alert('erro');
     }
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    const cartIcon = document.getElementById('cart-icon');
-    cartIcon.addEventListener('click', () => {
-        window.location.href = '/frontend/html/carrinho.html';
-    });
 });

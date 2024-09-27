@@ -17,12 +17,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         { id: 'dois', url: '/frontend/html/dois.html' },
         { id: 'adicionarC', url: '/frontend/html/carrinho.html' },
         { id: 'pagInicial', url: '/frontend/html/index.html' },
-        { id: 'comprar', url: '/frontend/html/comprar.html' },
+        { id: 'comprar1', url: '/frontend/html/comprar.html' },
         { id: 'ecobag', url: '/frontend/html/admin.html' },
         { id: 'voltar', url: null, action: () => window.history.back() }
     ];
 
-    elementos.forEach(({ id, url, action }) => {
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------
+    
+elementos.forEach(({ id, url, action }) => {
         const element = document.getElementById(id);
         if (element) {
             if (action) {
@@ -34,24 +37,75 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         }
     });
+    
+    const formularioCompra2 = document.getElementById('formularioCompra');
 
-    const checkoutForm = document.getElementById('checkout-form');
-    const checkoutContainer = document.getElementById('checkout-container');
-    const loadingScreen = document.getElementById('loading-screen');
-
-    if (checkoutForm) {
-        checkoutForm.addEventListener('submit', (event) => {
+    const comprar2 = document.getElementById('comprar');
+    
+    const telaCarregamento2 = document.getElementById('telaCarregamento');
+    
+    if (formularioCompra2) {
+        formularioCompra2.addEventListener('submit', async (event) => {
             event.preventDefault();
-            if (checkoutContainer) checkoutContainer.style.display = 'none';
-            if (loadingScreen) loadingScreen.style.display = 'flex';
-
-            setTimeout(() => {
-                window.location.href = '/frontend/html/pagina-de-sucesso.html';
-            }, 4000);
+    
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                const response = await fetch('http://localhost:3007/verificarCompra', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password }) 
+                });
+    
+                const result = await response.json();
+    
+                if (!result.success) {
+                   
+                    alert(result.message);
+                    return;
+                } else {
+                
+                    if (comprar2) comprar2.style.display = 'none';
+                    if (telaCarregamento2) telaCarregamento2.style.display = 'flex';
+    
+               
+                    setTimeout(() => {
+                        window.location.href = '/frontend/html/pagina-de-sucesso.html';
+                    }, 4000);
+                }
+            } catch (error) {
+                console.error('erro ao verificar email ou senha', error);
+                alert('erro');
+            }
         });
     }
+       
+   
 });
 
 
-// CARRINHO
+function carregarPerfil() {
+          
+    let dados = JSON.parse(localStorage.getItem('informacoes'));
+    
+    if (dados && dados.perfil) {
+
+      let html = document.getElementById('informacoes');
+      html.innerHTML = `<div style="display: flex; flex-direction: column; align-items: end">
+                        ${dados.perfil}
+                        </div>`
+
+      html.style.display = 'block';
+    } else {
+
+      console.log('vc nao esta logado');
+    }
+  }
+
+  window.onload = carregarPerfil;
+
 

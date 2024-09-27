@@ -1,3 +1,5 @@
+# BANCO DE DADOS ATUALIZADO
+
 create database FarAway;
 use FarAway;
 
@@ -7,8 +9,9 @@ name varchar(255) not null,
 email varchar(255) not null unique, 
 password varchar(255) not null,
 cpf_number bigint,
-status enum('ativo', 'inativo') default('ativo'),
-created_at timestamp default current_timestamp
+status enum('user', 'admin') default('user'),
+created_at timestamp default current_timestamp,
+perfil enum('user', 'admin') default("user")
 );
 
 CREATE TABLE products (
@@ -17,7 +20,6 @@ CREATE TABLE products (
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 
 CREATE TABLE cart_items (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -30,16 +32,4 @@ CREATE TABLE cart_items (
 );
 
 
-
-INSERT INTO products (name, price) VALUES ('caneta', 19.99);
-
-select * from cart_items;
-insert into users(name, email, password, cpf_number)
-values('suares', 'suares@gmail.com', 'senha', 93883);
-select * from users;
-
-update users set password = 'unisinos', name = 'dida' where id = 1;
-select * from users where id = 1;
-
-delete from users where id = 1;
-select * from users;
+=

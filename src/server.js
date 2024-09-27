@@ -1,25 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./db_config');
-const session = require('express-session');
-
 
 const porta = 3007;
 const app = express();
+
 
 app.use(cors());
 app.use(express.json());
 
 
-app.use(session({
-    secret: 'chave',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } 
-}));
-
-
-app.listen(porta, () => console.log(`rodando na porta ${porta}`));
+ 
+app.listen(porta, () => console.log(`rodando na porta ${porta}`));  
+const upload = require('./multer')
 
 // CADASTRO DO USUARIO
 
@@ -28,30 +21,42 @@ app.post('/usuario/cadastrar', (request, response) => {
 
     let checkQuery = 'SELECT * FROM users WHERE name = ? OR email = ?';
     connection.query(checkQuery, [name, email], (err, results) => {
+
         if (err) {
             console.error('Erro', err);
-            return response.status(500).json({ success: false, message: 'Erro no servidor.', data: err });
+            return response.status(500).json({ success: false, message: 'erro', data: err });
         }
         if (results.length > 0) {
-            return response.status(400).json({ success: false, message: 'Nome ou email já cadastrado.' });
+            return response.status(400).json({ success: false, message: 'nome ou email já está cadastrado.' });
         }
 
         let query = 'INSERT INTO users(name, email, password, cpf_number) VALUES(?,?,?,?)';
         let params = [name, email, password, cpf_number];
         connection.query(query, params, (err, results) => {
             if (err) {
-                console.error('Erro ao cadastrar usuário:', err);
-                return response.status(500).json({ success: false, message: 'Erro ao cadastrar usuário.', data: err });
+                console.error('erro ao cadastrar usuario', err);
+                return response.status(500).json({ success: false, message: 'erro', data: err });
             }
+
+            const newUser = {
+                id: results.insertId,
+                name,
+                email,
+                password, 
+                perfil: 'user' 
+            };
+
+
             response.status(201).json({
                 success: true,
-                message: 'Cadastro realizado com sucesso!',
-                data: results
+                message: 'sucesso pessoal',
+                data: newUser 
             });
         });
     });
 });
 
+      
 app.get('/usuarios/listar', (request, response) => {
     const query = 'select * from users';
 
@@ -83,36 +88,36 @@ app.get('/usuarios/listar', (request, response) => {
 })
 
 app.put('/usuario/editar/:id', (request, response) => {
-    let params = Array(
-        request.body.name,
-        request.params.id
-    );
-
-    let query = 'update users set name = ? where id = ?';
-
+    const { name, cpf_number, email, password } = request.body;
+    const id = request.params.id;
+    
+    // Parâmetros para atualizar
+    let params = [name, cpf_number, email, password, id];
+    
+    // Query para atualizar os campos
+    let query = `
+        UPDATE users
+        SET name = ?, cpf_number = ?, email = ?, password = ?
+        WHERE id = ?
+    `;
+    
     connection.query(query, params, (err, results) => {
-        if(results) {
-            response.status(200)
-            .json({
-                sucess: true,
-                message: 'sucesso',
+        if (results) {
+            response.status(200).json({
+                success: true,
+                message: 'Edição realizada com sucesso',
                 data: results
-            })
+            });
         } else {
-            response
-            .status(400)
-            .json({
-                sucess: false,
-                message: 'sem sucesso',
+            response.status(400).json({
+                success: false,
+                message: 'Erro ao editar',
                 data: err
-            })
-        
+            });
         }
-    }
-    ) 
+    });
+});
 
-
-})
 
 app.delete('/usuario/deletar/:id', (request, response) => {
     let params = Array(
@@ -146,151 +151,49 @@ app.delete('/usuario/deletar/:id', (request, response) => {
 
 // LOGIN 
 
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+app.post('/login', (request, response) => {
+    let params  = Array(
+        request.body.email
+    )
 
-    try {
-        if (!email || !password) {
-            return res.status(400).json({ message: 'precisa do email e senha' });
-        }
+    let query = "select id, name, email, password, perfil from users where email = ?";
 
-        console.log('procurando o usuário', email);
+    connection.query(query, params, (err, results) => {
+        if(results.length > 0 ) {
 
-        connection.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
-            if (err) {
-                console.error('erro para listar', err);
-                return res.status(500).json({ message: 'erro' });
+            let senhaDigitada = request.body.password
+            let senhaBanco = results[0].password
+
+            if(senhaBanco == senhaDigitada) {
+                response
+                .status(200)
+                .json({
+                    success: true, 
+                    message: "sucesso pessoal",
+                    data: results[0]
+                })
+            
+            } else{
+                response
+                .status(400)
+                .json({
+                    success: false,
+                    message: "verifique sua senha"
+                })
+                
             }
-
-            if (results.length === 0) {
-                console.log('não existe usuário com o email', email);
-                return res.status(401).json({ message: 'email não encontrado.' });
-            }
-
-            console.log('usuario foi encontrado');
-
-            if (results[0].password !== password) {
-                console.log('senha incorreta para o email:', email);
-                return res.status(401).json({ message: 'senha incorreta.' });
-            }
-
-            console.log('login com sucesso para o email:', email);
-
-            req.session.userId = results[0].id;
-            res.status(200).json({ message: 'Login com sucesso' });
-        });
-    } catch (error) {
-        console.error('erro', error);
-        return res.status(500).json({ message: 'erro' });
-    }
-});
-
-app.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ message: 'erro para deslogar' });
-        }
-        res.status(200).json({ message: 'Logout de sucesso' });
-    });
-});
-
-function isAdmin(req, res, next) {
-    const userId = req.body.userId || req.query.userId; 
-
-    let query = 'SELECT role FROM users WHERE id = ?';
-    connection.query(query, [userId], (err, results) => {
-        if (err) {
-            return res.status(500).json({ success: false, message: 'erro no servidor.' });
+           
+        } else {
+            response
+            .status(400)
+            .json({
+                success: false,
+                message: "email não cadastrado"
+            })
         }
         
-        if (results.length === 0 || results[0].role !== 'admin') {
-            return res.status(403).json({ success: false, message: 'Acesso negado. tem que acertar a senha né' });
-        }
-        
-        next();
-    });
-}
-
-
-// CADASTRO DE PRODUTOS INTERFACE ADMIN
-
-app.post('/produto/cadastrar', (req, res) => {
-    const { name, description, price, image_url, adminPassword } = req.body;
-
-    const validAdminPassword = 'senha'; 
-
-    if (adminPassword !== validAdminPassword) {
-        return res.status(403).json({ success: false, message: 'senha do admin incorreta' });
-    }
-
-    const query = 'INSERT INTO products (name, description, price, image_url) VALUES (?, ?, ?, ?)';
-    const params = [name, description, price, image_url];
-
-    connection.query(query, params, (err, results) => {
-        if (err) {
-            console.error('erro', err);
-            return res.status(500).json({ success: false, message: 'erro para cadastrar produto', data: err });
-        }
-        res.status(201).json({ success: true, message: 'sucesso para cadastrar produto' });
-    });
-});
-
-
-app.get('/produtos/listar', (req, res) => {
-    const query = 'SELECT * FROM products';
-
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('erro para listar', err);
-            return res.status(500).json({ success: false, message: 'erro para listar', data: err });
-        }
-        res.status(200).json({ success: true, data: results });
-    });
-});
-
-
-app.put('/produto/editar/:id', (request, response) => {
-    let params = [request.body.name, request.params.id];
-
-    let query = 'UPDATE products SET name = ? WHERE id = ?';
-    connection.query(query, params, (err, results) => {
-        if (results) {
-            response.status(200).json({
-                success: true,
-                message: 'edição com sucesso',
-                data: results
-            });
-        } else {
-            response.status(400).json({
-                success: false,
-                message: 'erro para editar',
-                data: err
-            });
-        }
-    });
-});
-
-
-app.delete('/produto/deletar/:id', (request, response) => {
-    let params = [request.params.id];
-
-    let query = 'DELETE FROM products WHERE id = ?';
-    connection.query(query, params, (err, results) => {
-        if (results) {
-            response.status(200).json({
-                success: true,
-                message: 'produto deletado',
-                data: results  
-            });
-        } else {
-            response.status(400).json({
-                success: false,
-                message: 'erro para deletar produto',
-                data: err
-            });
-        }
-    });
-});
+    })
+})
 
 
 // CARRINHO
@@ -299,21 +202,57 @@ app.delete('/produto/deletar/:id', (request, response) => {
 app.post('/carrinho/adicionar', (request, response) => {
     const { user_id, product_id, quantity } = request.body;
 
-    let query = 'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)';
-    let params = [user_id, product_id, quantity];
-
-    connection.query(query, params, (err, results) => {
+    const checkQuery = 'SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?';
+    connection.query(checkQuery, [user_id, product_id], (err, results) => {
         if (err) {
-            console.error('erro para adicionar ao carrinho', err);
-            return response.status(500).json({ success: false, message: 'erro, tem que ver isso ai', data: err });
+            console.error('erro', err);
+            return response.status(500).json({ success: false, message: 'erro', data: err });
         }
-        response.status(201).json({
-            success: true,
-            message: 'produto adicionado ao carrinho',
-            data: results
+
+        if (results.length > 0) {
+            
+            return response.status(400).json({ success: false, message: 'esse produto já está no carrinho' });
+        }
+
+        
+        const query = 'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)';
+        const params = [user_id, product_id, quantity];
+
+        connection.query(query, params, (err, results) => {
+            if (err) {
+                console.error('erro', err);
+                return response.status(500).json({ success: false, message: 'erro', data: err });
+            }
+            response.status(201).json({
+                success: true,
+                message: 'O produto foi adicionado ao carrinho!',
+                data: results
+            });
         });
     });
 });
+
+
+
+
+app.put('/carrinho/editar/:id', (request, response) => {
+    const { id } = request.params;
+    const { quantity } = request.body;
+
+    let query = 'UPDATE cart_items SET quantity = ? WHERE id = ?';
+    let params = [quantity, id];
+
+    connection.query(query, params, (err, results) => {
+        if (err) {
+            console.error('erro na atualização da quantidade', err);
+            return response.status(500).json({ success: false, message: 'erro na atualização' });
+        }
+        response.status(200).json({ success: true, message: 'quantidade atualizada' });
+    });
+});
+
+
+
 
 app.get('/carrinho/:user_id', (req, res) => {
     const { user_id } = req.params;
@@ -366,3 +305,59 @@ app.delete('/carrinho/remover/:id', (request, response) => {
     });
 });
 
+
+// COMPRA 
+
+app.post('/verificarCompra', (req, res) => {
+    const { email, password } = req.body;
+
+
+    let query = "SELECT id FROM users WHERE email = ? AND password = ?";
+
+
+    connection.query(query, [email, password], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'erro' });
+        }
+
+        if (results.length > 0) {
+            res.status(200).json({ success: true, message: 'certinho' });
+        } else {
+            res.status(404).json({ success: false, message: 'email ou senha incorretos' });
+        }
+    });
+});
+
+
+// -----------------------------------------------------------------------------------------
+
+
+app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
+    let params = Array(
+        request.body.name,
+        request.body.price,
+        request.file.filename
+    )
+
+    let query = 'insert into products(name, price, image) values(?,?,?)';
+
+    connection.query(query, params, (err, results) => {
+        if(results) {
+            response
+                .status(201)
+                .json({
+                    success: true,
+                    message: "sucessp",
+                    data: results
+                })
+        }else {
+            response
+            .status(400)
+            .json({
+                success: false,
+                message: "sem sucesso",
+                data: err
+            })
+        }
+    })
+})

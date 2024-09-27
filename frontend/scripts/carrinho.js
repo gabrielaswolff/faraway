@@ -1,84 +1,140 @@
-async function addToCart(productId, quantity, price) {
-    const userId = localStorage.getItem('userId');
+function getUserIdFromLocalStorage() {
+    const userInfo = localStorage.getItem('informacoes');
+    
+    if (userInfo) {
+        const user = JSON.parse(userInfo);
+        return user.id; 
+    }
+
+    return null;
+}
+
+
+
+async function adicionarAoCarrinho(productId, quantidade = 1) {
+
+    const userId = getUserIdFromLocalStorage();
 
     if (!userId) {
-        alert('É necessário realizar o login.');
+        alert('você precisa fazer login antes');
         return;
     }
 
-    try {
-        const response = await fetch('http://localhost:3007/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({ productId, quantity, price }),
-        });
+    const data = {
+        user_id: userId,
+        product_id: productId,
+        quantity: quantidade
+    };
 
-        const data = await response.json();
+    const response = await fetch('http://localhost:3007/carrinho/adicionar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
 
-        if (data.success) {
-            alert(data.message);
-            displayCart();
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.error('erro para adicionar produto', error);
-        alert('erro para adicionar produto');
+        body: JSON.stringify(data)
+        
+    });
+
+    const result = await response.json();
+
+
+    if (result.success) {
+        alert(result.message);
+
+    } else {
+        alert(result.message); 
     }
 }
 
-async function displayCart() {
-    const userId = localStorage.getItem('userId');
-
-    if (!userId) {
-        alert('É necessário realizar o login.');
+async function carregarCarrinho() {
+    const userInfo = localStorage.getItem('informacoes');
+    if (!userInfo) {
+        alert('você precisa fazer login');
         return;
     }
 
-    try {
-        const response = await fetch(`http://localhost:3007/cart`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+    const userId = JSON.parse(userInfo).id;
+
+    const response = await fetch(`http://localhost:3007/carrinho/${userId}`);
+
+    const result = await response.json();
+
+    if (result.success) {
+        const carrinhoDiv = document.getElementById('carrinho-itens');
+        carrinhoDiv.innerHTML = ''; 
+
+        let totalGeral = 0;  
+
+        result.data.forEach(item => {
+            const totalItem = item.price * item.quantity;
+            totalGeral += totalItem; 
+
+            carrinhoDiv.innerHTML += `
+                <div class="item-carrinho" id="item-${item.id}">
+                    <h3>${item.product_name}</h3>
+                    <div class="quantidade">
+                        <button class="quantidadeMenos" onclick="alterarQuantidade(-1, ${item.id})">-</button>
+                        <input class="quantidade-input" type="text" value="${item.quantity}" min="1" onchange="editarQuantidade(${item.id}, this.value)">
+                        <button class="quantidadeMais" onclick="alterarQuantidade(1, ${item.id})">+</button>
+                    </div>
+                    <p> R$${totalItem.toFixed(2)}</p>
+                    <button class="removerBotao" onclick="removerProduto(${item.id})">Remover</button>
+                </div>`;
         });
-        const data = await response.json();
 
-        if (data.success) {
-            const cartItems = data.items;
-            let cartElement = document.getElementById('cart');
-            cartElement.innerHTML = '';
-
-            let totalPrice = 0;
-
-            cartItems.forEach(item => {
-                totalPrice += item.price * item.quantity;
-
-                let listItem = document.createElement('li');
-                listItem.className = 'cart-item';
-                listItem.innerHTML = `
-                    ${item.product_name}: ${item.quantity} unidade(s) - R$${item.price} cada
-                    <button class="quantity-button plus" onclick="changeQuantity(${item.id}, 1)">+</button>
-                    <button class="quantity-button minus" onclick="changeQuantity(${item.id}, -1)">-</button>
-                    <button class="remove-button" onclick="removeFromCart(${item.id})">Remover</button>
-                `;
-                cartElement.appendChild(listItem);
-            });
-
-            let totalPriceElement = document.getElementById('total-price');
-            if (!totalPriceElement) {
-                totalPriceElement = document.createElement('div');
-                totalPriceElement.id = 'total-price';
-                document.querySelector('.cart-summary').insertBefore(totalPriceElement, document.getElementById('comprar'));
-            }
-            totalPriceElement.innerHTML = `Total: R$${totalPrice.toFixed(2)}`;
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.error('Erro ao exibir o carrinho:', error);
-        alert('Erro ao exibir o carrinho.');
+        carrinhoDiv.innerHTML += `
+            <div class="totalCarrinho">
+                <h3>Total R$${totalGeral.toFixed(2)}</h3>
+            </div>`;
+        
+    } else {
+        alert(result.message);
     }
 }
+
+async function editarQuantidade(cartItemId, novaQuantidade) {
+    const response = await fetch(`http://localhost:3007/carrinho/editar/${cartItemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quantity: novaQuantidade })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        alert('quantidade atualizada');
+        carregarCarrinho(); 
+    } else {
+        alert('erro');
+    }
+}
+
+function alterarQuantidade(change, cartItemId) {
+    const input = document.querySelector(`#item-${cartItemId} .quantidade-input`);
+    let novaQuantidade = parseInt(input.value) + change;
+    
+    if (novaQuantidade < 1) novaQuantidade = 1; 
+    
+    input.value = novaQuantidade;
+    editarQuantidade(cartItemId, novaQuantidade); 
+}
+
+async function removerProduto(cartItemId) {
+    const response = await fetch(`http://localhost:3007/carrinho/remover/${cartItemId}`, {
+        method: 'DELETE'
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        alert('produto removido');
+        document.getElementById(`item-${cartItemId}`).remove(); 
+    } else {
+        alert('erro');
+    }
+}
+
+carregarCarrinho();

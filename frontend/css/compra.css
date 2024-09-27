@@ -15,14 +15,14 @@ body{
     100% { background-color: #11579b; }
 }
 
-.checkout-container{
+.comprar{
     background: #fff;
     padding: 5vh;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-.success-container {
+.containerSucesso{
     display: none; 
     text-align: center;
     background-color: white;
@@ -31,21 +31,21 @@ body{
 h2 {
     color: #0277bd;
 }
-.form-group {
+.caixas{
     margin-bottom: 15px;
 }
-.form-group label {
+.caixas label {
     display: block;
     margin-bottom: 5px;
 }
-.form-group input {
+.caixas input {
     width: 100%;
     padding: 8px;
     border: 1px solid #0277bd;
     border-radius: 5px;
     transition: border-color 0.3s;
 }
-.form-group input:focus {
+.caixas input:focus {
     border-color: #01579b;
 }
 .btn {
@@ -73,7 +73,7 @@ h2 {
 
 }
 
-.loading-screen {
+.telaCarregamento{
     position: fixed;
     top: 0;
     left: 0;
@@ -90,7 +90,7 @@ h2 {
     
 }
 
-.loading-spinner {
+.bolinhaCarregamento{
     border: 10px solid #f3f3f3;
     border-top: 10px solid #3498db;
     border-radius: 50%;
