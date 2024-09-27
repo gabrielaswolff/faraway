@@ -1,0 +1,132 @@
+body {
+    background-color: #111D3B;
+    margin: 0;
+}
+
+header {
+    background-color: #031237;
+    background-size: cover;
+    height: 14vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    
+}
+
+main {
+    display: flex;
+    justify-content: center; 
+
+}
+
+#inicio {
+    cursor: pointer;
+}
+
+
+.meuCarrinhoMain {
+    color: #BBD1F0;
+    text-align: center; 
+    width: 80%; 
+    
+}
+
+#cart {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(20vh, 1fr)); 
+    gap: 5vh; 
+    justify-items: center; 
+    justify-content: center ;  
+}
+
+.cart-item {
+    background-color: #85a9db;
+    color: #111D3B;
+    border-radius: 8px;
+    width: 26vh; 
+    height: 25vh;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    font-size: 3vh;
+    color: #111D3B; 
+}
+
+.quantity-button, .remove-button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: auto;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+   
+
+}
+
+.plus {
+    background-color: #BBD1F0; 
+    color: #031237;
+    transition: background-color 0.3s ease;
+
+   
+}
+
+.plus:hover {
+    background-color: #4a77b5;
+}
+
+.minus {
+    background-color: #BBD1F0; 
+    color: #031237;
+    transition: background-color 0.3s ease;
+}
+
+.minus:hover {
+    background-color: #4a77b5;
+}
+
+.remove-button {
+    background-color: #f44336; 
+    transition: background-color 0.3s ease;
+}   
+
+.remove-button:hover {
+    background-color: #cd3429;
+}
+
+.cart-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#total-price {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.buttonComprarCarrinho {
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buttonComprarCarrinho:hover {
+    background-color: #45a049;
+}

@@ -1,0 +1,289 @@
+body {
+    background-color: #111D3B;
+    margin: 0;
+}
+
+header {
+    background-color: #031237;
+    background-size: cover;
+    height: 14vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+footer{
+    color: #BBD1F0;
+    background-color: #031237;
+    height: 40vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0 auto;
+    display: flex;
+    gap: 20vh;
+    justify-content: center;
+
+
+}
+
+#inicio {
+    cursor: pointer;
+}
+
+
+.cart-icon:hover{
+    color: #4b9cd6;
+
+}
+
+.fraseMain {
+    color: #BBD1F0;
+    text-align: center;
+}
+
+.produtos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 15px;
+}
+
+.produtosSeparados {
+    text-align: center;
+    flex: 1 1 200px;
+    margin: 10px;
+}
+
+.produtosSeparados img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.descricao {
+    color: #111D3B;
+}
+
+.star {
+    color: #111D3B;
+}
+
+.precos {
+    color: #111D3B;
+    text-align: center;
+}
+
+.adicionarCarrinho {
+    color: black;
+    background-color: #BBD1F0;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #BBD1F0;
+    border-radius: 10px;
+    width: 30vh;
+    height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 1vh;
+}
+
+.container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container2 {
+    background-color: #BBD1F0;
+    width: 150vh;
+    border-radius: 10px;
+    height: auto;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    margin-top: 10vh;
+    display: flex;
+    padding: 20px;
+}
+
+.imagemPagina2 {
+    border-radius: 10px;
+    width: 50vh;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.buttons{
+    justify-content: space-between;
+}
+
+.buttonComprar {
+    background-color: #1c8fc4;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 19vh;
+    height: 7vh;
+    font-size: 2vh;
+    border-color: #111D3B;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buttonComprar:hover{
+    background-color: #155a8a;
+    color: #BBD1F0;
+
+
+}
+
+.button{
+    background-color: #1c8fc4;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 19vh;
+    height: 7vh;
+    font-size: 2vh;
+    border-color: #111D3B;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover{
+    background-color: #155a8a;
+}
+
+.ofertaContainer {
+    background-color: #111D3B;
+    color: white;
+    border-radius: 10px;
+    width: 60vh;
+    display: block;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    font-weight: bold;
+}
+
+.tituloPagina2 {
+    color: #031237;
+    font-size: large;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.texto1Pagina2{
+    color: #031237;
+    margin-top: 0;
+
+
+}
+
+.texto2Pagina2{
+    color: #031237;
+
+
+}
+
+.precoPagina2{
+    color: #111D3B;
+    font-size: 7vh;
+}
+
+
+.right-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    margin-right: 2vh; 
+}
+
+.cart-icon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    color: #BBD1F0;
+    transition: background-color 0.3s ease;
+}
+
+#a1 {
+    text-decoration: none;
+    border: 2px solid #BBD1F0;
+    background-color: transparent;
+    padding: 10px;
+    color: #BBD1F0;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#a2{
+    
+    text-decoration: none;
+    border: 2px solid #BBD1F0; 
+    background-color: transparent; 
+    padding: 10px; 
+    margin: 10px; 
+    color: #BBD1F0;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    
+}
+
+
+
+#a1:hover{
+    border-color: #4b9cd6;
+    color: #4b9cd6;
+
+}
+
+
+#a2:hover{
+    border-color: #4b9cd6;
+    color: #4b9cd6;
+
+}
+
+.ecobag{
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    color: #BBD1F0;
+    transition: background-color 0.3s ease;
+}
+
+.ecobag:hover{
+    color: #4b9cd6;
+}
+
+h1{
+    color: #BBD1F0;
+}
+
+label{
+    color: #BBD1F0;
+}

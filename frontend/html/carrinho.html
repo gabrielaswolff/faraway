@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="/frontend/css/carrinho.css"> 
+    <link rel="stylesheet" href="/frontend/css/style.css">  
+</head>
+<body>
+    <header>
+        <img id="inicio" src="/frontend/images/logo.png" alt="" style="width: 25vh; height: auto;">
+    
+        <div class="right-container">
+
+            <svg id="ecobag" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="ecobag" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z"/>
+            </svg>
+            <a id="a1" href="login.html">Sign in</a>
+            <a id="a2" href="cadastro.html">Sign up</a>
+        </div>
+        
+    </header>
+
+    <main>
+        <div class="meuCarrinhoMain">
+            <h1>Meu carrinho</h1>
+            
+            <div id="cart"></div>
+            <div class="cart-summary">
+                <div id="total-price"></div>
+                <button id="comprar" data-id="91" data-name="comprar" class="buttonComprarCarrinho">Comprar itens</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="/frontend/scripts/script.js"></script>
+    <script src="/frontend/scripts/carrinho.js"></script>
+</body>
+</html>
