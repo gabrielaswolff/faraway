@@ -64,6 +64,8 @@ window.addEventListener("load", () => {
     }
 })
 
+// ------------------------------------------------------------------------------------------------------------------------
+
 
 async function cadastrarProduto(event) {
     event.preventDefault()
@@ -71,10 +73,28 @@ async function cadastrarProduto(event) {
     const title = document.getElementById('name').value
     const price = Number(document.getElementById('price').value)
     const file = document.getElementById('file').files[0]
+    const descricao = document.getElementById('description').value
 
     let formData = new FormData();
 
     formData.append('name', title)
     formData.append('price', price)
     formData.append('file', file)
-}
+    formData.append('description', description)
+
+    const response = await fetch('http://localhost:3007/produto/cadastrar', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: formData
+    })
+
+    const results = await response.jon()
+
+    if(results.success) {
+        alert(results.message)
+    } else {
+        alert(results.message)
+    }
+}   

@@ -332,14 +332,17 @@ app.post('/verificarCompra', (req, res) => {
 // -----------------------------------------------------------------------------------------
 
 
+// CADASTRAR PRODUTO INTERFAE ADMIN15
+
 app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
     let params = Array(
         request.body.name,
         request.body.price,
-        request.file.filename
+        request.file.filename,
+        request.body.description
     )
 
-    let query = 'insert into products(name, price, image) values(?,?,?)';
+    let query = 'insert into products(name, price, description,  image) values(?,?,?,?)';
 
     connection.query(query, params, (err, results) => {
         if(results) {
