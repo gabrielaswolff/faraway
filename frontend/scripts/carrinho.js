@@ -26,7 +26,7 @@ async function adicionarAoCarrinho(productId, quantidade = 1) {
         quantity: quantidade
     };
 
-    const response = await fetch('http://localhost:3007/carrinho/adicionar', {
+    const response = await fetch('http://localhost:3004/carrinho/adicionar', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ async function carregarCarrinho() {
 
     const userId = JSON.parse(userInfo).id;
 
-    const response = await fetch(`http://localhost:3007/carrinho/${userId}`);
+    const response = await fetch(`http://localhost:3004/carrinho/${userId}`);
 
     const result = await response.json();
 
@@ -94,7 +94,7 @@ async function carregarCarrinho() {
 }
 
 async function editarQuantidade(cartItemId, novaQuantidade) {
-    const response = await fetch(`http://localhost:3007/carrinho/editar/${cartItemId}`, {
+    const response = await fetch(`http://localhost:3004/carrinho/editar/${cartItemId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ function alterarQuantidade(change, cartItemId) {
 }
 
 async function removerProduto(cartItemId) {
-    const response = await fetch(`http://localhost:3007/carrinho/remover/${cartItemId}`, {
+    const response = await fetch(`http://localhost:3004/carrinho/remover/${cartItemId}`, {
         method: 'DELETE'
     });
 

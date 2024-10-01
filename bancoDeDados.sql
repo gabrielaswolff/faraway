@@ -11,25 +11,25 @@ password varchar(255) not null,
 cpf_number bigint,
 status enum('user', 'admin') default('user'),
 created_at timestamp default current_timestamp,
-perfil enum('user', 'admin') default("user")
+perfil enum('user', 'admin') default('user')
 );
 
 CREATE TABLE products (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    image text not null,
+    description text
+	
 );
 
 CREATE TABLE cart_items (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-
-=

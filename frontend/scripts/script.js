@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         { id: 'pedrasGigaSize', url: '/frontend/html/pedras.html' },
         { id: 'gnomos', url: '/frontend/html/gnomos.html' },
         { id: 'camiseta', url: '/frontend/html/camiseta.html' },
-        { id: 'login', url: '/frontend/html/login.html' },
         { id: 'strogonoff', url: '/frontend/html/strogonoff.html' },
         { id: 'babyTee', url: '/frontend/html/babyTee.html' },
         { id: 'vacina', url: '/frontend/html/vacina.html' },
@@ -54,7 +53,7 @@ elementos.forEach(({ id, url, action }) => {
             const password = document.getElementById('password').value;
     
             try {
-                const response = await fetch('http://localhost:3007/verificarCompra', {
+                const response = await fetch('http://localhost:3004/verificarCompra', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const connection = require('./db_config');
 
-const porta = 3007;
+const porta = 3004;
 const app = express();
 
 
@@ -12,7 +12,7 @@ app.use(express.json());
 
  
 app.listen(porta, () => console.log(`rodando na porta ${porta}`));  
-const upload = require('./multer')
+const upload = require('./multer');
 
 // CADASTRO DO USUARIO
 
@@ -332,7 +332,7 @@ app.post('/verificarCompra', (req, res) => {
 // -----------------------------------------------------------------------------------------
 
 
-// CADASTRAR PRODUTO INTERFAE ADMIN15
+// CADASTRAR PRODUTO INTERFAE ADMIN
 
 app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
     let params = Array(
@@ -342,7 +342,7 @@ app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
         request.body.description
     )
 
-    let query = 'insert into products(name, price, description,  image) values(?,?,?,?)';
+    let query = 'insert into products(name, price, image,  description) values(?,?,?,?)';
 
     connection.query(query, params, (err, results) => {
         if(results) {
@@ -350,7 +350,7 @@ app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
                 .status(201)
                 .json({
                     success: true,
-                    message: "sucessp",
+                    message: "sucesso",
                     data: results
                 })
         }else {
@@ -364,3 +364,100 @@ app.post('/produto/cadastrar', upload.single('file'), (request, response) => {
         }
     })
 })
+
+
+app.use('/uploads', express.static(__dirname + '\\public'))
+
+
+app.get('/produtos/listar', (request, response) => {
+    let query = "select * from products";
+
+    connection.query(query, (err, results) => {
+        if(results) {
+            response
+            .status(200)
+            .json({
+                success: true,  
+                message: "sucesso",
+                data: results
+            })
+        } else {
+            response
+            .status(400 )
+            .json({
+                success: false,
+                message: "sem sucesso",
+                data: results
+            })
+
+        }
+    })
+})
+
+
+app.put('/produto/editar/:id', upload.single('file'), (req, res) => {
+    const productId = req.params.id;
+    const { name, price, description } = req.body;
+
+    let query;
+    let params;
+
+    if (req.file) {
+        // Se houver nova imagem
+        query = 'UPDATE products SET name = ?, price = ?, image = ?, description = ? WHERE id = ?';
+        params = [name, price, req.file.filename, description, productId];
+    } else {
+        // Sem nova imagem
+        query = 'UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?';
+        params = [name, price, description, productId];
+    }
+
+    connection.query(query, params, (err, results) => {
+        if (err) {
+            return res.status(400).json({ success: false, message: "Erro ao editar produto", error: err });
+        }
+        if (results.affectedRows > 0) {
+            res.status(200).json({ success: true, message: "Produto atualizado com sucesso", data: results });
+        } else {
+            res.status(404).json({ success: false, message: "Produto não encontrado" });
+        }
+    });
+});
+
+app.delete('/produto/excluir/:id', (request, response) => {
+    const productId = request.params.id;
+
+    if (!productId) {
+        return response.status(400).json({
+            success: false,
+            message: "ID do produto não fornecido."
+        });
+    }
+    
+    let query = 'DELETE FROM products WHERE id = ?';
+
+    connection.query(query, [productId], (err, results) => {
+        if (err) {
+            console.error('Erro ao excluir produto:', err);
+            return response.status(500).json({
+                success: false,
+                message: "Erro no servidor ao excluir produto.",
+                error: err.message
+            });
+        }
+
+        if (results.affectedRows > 0) {
+            response.status(200).json({
+                success: true,
+                message: "Produto excluído com sucesso.",
+                data: results
+            });
+        } else {
+            response.status(404).json({
+                success: false,
+                message: "Nenhum produto encontrado para exclusão.",
+                data: results
+            });
+        }
+    });
+});

@@ -9,7 +9,7 @@ document.getElementById('formulario').addEventListener('submit', async (event) =
     const data = { name, email, password, cpf_number };
     
     try {
-        const response = await fetch('http://localhost:3007/usuario/cadastrar', {
+        const response = await fetch('http://localhost:3004/usuario/cadastrar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

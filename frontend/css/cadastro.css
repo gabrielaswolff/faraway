@@ -1,4 +1,4 @@
-body{
+body {
     overflow: hidden;
     height: 200vh;
     background: linear-gradient(to bottom, #111D3B, #BBD1F0);
@@ -6,7 +6,7 @@ body{
 }
 
 
-header{
+header {
     background-color: #031237;
     background-size: cover;
     margin: 0;
@@ -19,7 +19,7 @@ header{
 }
 
 
-.botao1{
+.botao1 {
     margin-top: 2vh;
     cursor: pointer;
     color: #fff;
@@ -27,12 +27,12 @@ header{
     border-color: #BBD1F0;
     background-color: #111D3B;
     transition: background-color 0.3s ease;
-    padding: 2vh 4vh; 
-    font-size: 2vh; 
+    padding: 2vh 4vh;
+    font-size: 2vh;
     border-radius: 10px;
-    
- 
-    
+
+
+
 
 }
 
@@ -40,54 +40,53 @@ header{
     cursor: pointer;
 }
 
-.botao2{
+.botao2 {
     border-radius: 10px;
     cursor: pointer;
     color: #fff;
     border-color: #BBD1F0;
     background-color: #111D3B;
     transition: background-color 0.3s ease;
-    
+
 
 
 }
 
-.botao1:hover{
+.botao1:hover {
     background-color: #1a2b52;
 
 }
 
-.botao2:hover{
+.botao2:hover {
     background-color: #1a2b52;
 
 }
 
 input {
     background-color: #fff;
-    border-radius: 58px; 
+    border-radius: 58px;
     border-color: #111D3B;
     color: #031237;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     padding: 2vh;
-    margin-bottom: 2vh; 
+    margin-bottom: 2vh;
 }
 
 
-h2{
+h2 {
     text-align: center;
     font-size: 4vh;
     color: #BBD1F0;
-
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#loginForm{
+#loginForm {
     margin-top: 8vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2vh;
 
 }
 
@@ -102,14 +101,14 @@ h2{
 
 .perfil {
     color: #BBD1F0;
-    margin-bottom: 2vh; 
+    margin-bottom: 2vh;
 }
 
 .right-container {
     display: flex;
     align-items: center;
-    gap: 10px; 
-    margin-right: 2vh; 
+    gap: 10px;
+    margin-right: 2vh;
 }
 
 .cart-icon {
@@ -120,12 +119,12 @@ h2{
     transition: background-color 0.3s ease;
 }
 
-.cart-icon:hover{
+.cart-icon:hover {
     color: #4b9cd6;
 
 }
 
-.ecobag{
+.ecobag {
     width: 35px;
     height: 35px;
     cursor: pointer;
@@ -133,28 +132,28 @@ h2{
     transition: background-color 0.3s ease;
 }
 
-.ecobag:hover{
+.ecobag:hover {
     color: #4b9cd6;
 }
 
-h1{
+h1 {
     color: #BBD1F0;
 }
 
-label{
+label {
     color: #BBD1F0;
 }
 
-.perfil2{
+.perfil2 {
     color: #BBD1F0;
 }
 
-#informacoes{
+#informacoes {
     color: #BBD1F0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.a5{
+.a5 {
     border-radius: 2px;
     background-color: transparent;
     border-color: #BBD1F0;
@@ -167,11 +166,11 @@ label{
     cursor: pointer;
 }
 
-.a5:hover{
+.a5:hover {
     border-color: #4b9cd6;
     color: #4b9cd6;
 }
 
-.sairr{
+.sairr {
     color: #BBD1F0;
 }

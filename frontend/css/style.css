@@ -16,7 +16,7 @@ header {
     position: relative;
 }
 
-footer{
+footer {
     color: #BBD1F0;
     background-color: #031237;
     height: 40vh;
@@ -34,7 +34,7 @@ footer{
 }
 
 
-.cart-icon:hover{
+.cart-icon:hover {
     color: #4b9cd6;
 
 }
@@ -129,7 +129,7 @@ footer{
     padding-left: 20px;
 }
 
-.buttons{
+.buttons {
     justify-content: space-between;
 }
 
@@ -148,14 +148,14 @@ footer{
     transition: background-color 0.3s ease;
 }
 
-.buttonComprar:hover{
+.buttonComprar:hover {
     background-color: #155a8a;
     color: #BBD1F0;
 
 
 }
 
-.button{
+.button {
     background-color: #1c8fc4;
     color: white;
     border-radius: 10px;
@@ -170,7 +170,7 @@ footer{
     transition: background-color 0.3s ease;
 }
 
-.button:hover{
+.button:hover {
     background-color: #155a8a;
 }
 
@@ -192,20 +192,20 @@ footer{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.texto1Pagina2{
+.texto1Pagina2 {
     color: #031237;
     margin-top: 0;
 
 
 }
 
-.texto2Pagina2{
+.texto2Pagina2 {
     color: #031237;
 
 
 }
 
-.precoPagina2{
+.precoPagina2 {
     color: #111D3B;
     font-size: 7vh;
 }
@@ -214,8 +214,8 @@ footer{
 .right-container {
     display: flex;
     align-items: center;
-    gap: 10px; 
-    margin-right: 2vh; 
+    gap: 10px;
+    margin-right: 2vh;
 }
 
 .cart-icon {
@@ -237,38 +237,38 @@ footer{
     transition: background-color 0.3s ease;
 }
 
-#a2{
-    
+#a2 {
+
     text-decoration: none;
-    border: 2px solid #BBD1F0; 
-    background-color: transparent; 
-    padding: 10px; 
-    margin: 10px; 
+    border: 2px solid #BBD1F0;
+    background-color: transparent;
+    padding: 10px;
+    margin: 10px;
     color: #BBD1F0;
     cursor: pointer;
     text-align: center;
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease;
-    
+
 }
 
 
 
-#a1:hover{
+#a1:hover {
     border-color: #4b9cd6;
     color: #4b9cd6;
 
 }
 
 
-#a2:hover{
+#a2:hover {
     border-color: #4b9cd6;
     color: #4b9cd6;
 
 }
 
-.ecobag{
+.ecobag {
     width: 35px;
     height: 35px;
     cursor: pointer;
@@ -276,30 +276,30 @@ footer{
     transition: background-color 0.3s ease;
 }
 
-.ecobag:hover{
+.ecobag:hover {
     color: #4b9cd6;
 }
 
-h1{
+h1 {
     color: #BBD1F0;
 }
 
-label{
+label {
     color: #BBD1F0;
 }
 
-#informacoes{
+#informacoes {
     color: #BBD1F0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 
-.perfil{
+.perfil {
     color: #BBD1F0;
 }
 
 
-.a5{
+.a5 {
     border-radius: 2px;
     background-color: transparent;
     border-color: #BBD1F0;
@@ -312,7 +312,80 @@ label{
     cursor: pointer;
 }
 
-.a5:hover{
+.a5:hover {
     border-color: #4b9cd6;
     color: #4b9cd6;
+}
+
+
+/* ------------------------------------------------------------ */
+
+#card_produto {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 2vh;
+    row-gap: 4vh;
+    justify-items: center;
+    margin-left: 4vh;
+    margin-right: 4vh;
+    padding-bottom: 10vh;
+    margin-top: 6vh;
+    color: #111D3B;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b0c8ed;
+    padding: 1.5vh;
+    width: 27vh;
+    height: 45vh;
+    border-radius: 1vh;
+    transition: transform 0.3s ease;
+    font-size: 2.5vh;
+}
+
+.cards:hover {
+    transform: scale(1.05);
+}
+
+.cards img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product-price {
+    font-size: 4vh;
+    font-weight: bold;
+    margin-bottom: auto;
+}
+
+.formularioEdicao {
+    background-color: #b0c8ed;
+    margin-top: 8vh;
+    align-items: center;
+    border-radius: 5vh;
+    border: 1px #BBD1F0;
+
+
+
+}
+
+
+.botao1 {
+    margin-top: 2vh;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 1px;
+    border-color: #BBD1F0;
+    background-color: #111D3B;
+    transition: background-color 0.3s ease;
+    padding: 2vh 4vh;
+    font-size: 2vh;
+    border-radius: 10px;
+
 }
