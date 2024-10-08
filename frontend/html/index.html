@@ -25,9 +25,9 @@
                     d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
             </svg>
 
-            <svg id="ecobag" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="ecobag" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z" />
+            <svg xmlns="http://www.w3.org/2000/svg" height="30" fill="currentColor" class="perfil" viewBox="0 0 16 16">
+                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
             </svg>
 
             <svg xmlns="http://www.w3.org/2000/svg" height="44" fill="currentColor" class="perfil" viewBox="0 0 16 16">
@@ -35,7 +35,6 @@
                 <path fill-rule="evenodd"
                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
             </svg>
-
 
             <div id="informacoes"></div>
 
@@ -61,13 +60,44 @@
 
 
 
-        <div id="formulario_edicao" style="display:none;">
+
+
+
+        <button id="abrirPopUp">Editar Produto</button> <!-- Botão para abrir o pop-up -->
+
+<div class="abrirPopUp" id="formulario_edicao" style="display:none;">
+    <span id="closePopup" class="close">&times;</span>
+    <div class="popUpConteudo">
+        <form id="editar_produto_form" onsubmit="editarProduto(event)">
+            <input type="hidden" id="product_id">
+                <label for="product_name">Nome do produto:</label>
+                <input class="formularioEdicao" type="text" id="product_name" name="name">    
+                <label class="formularioEdicao" for="product_price">Preço:</label>
+                <input class="formularioEdicao" type="number"step="any" id="product_price" name="price">
+                
+                <label for="product_description">Descrição:</label>
+                <textarea class="formularioEdicao" id="product_description" name="description"></textarea>
+                
+                <label for="product_image">Imagem</label>
+                <input class="formularioEdicao" type="file" id="product_image" name="image">
+                
+                <button type="submit">Salvar Alterações</button>
+           
+        </form>
+    </div>
+</div>
+
+
+
+        <!-- <div class="abrirPopUp"  id="formulario_edicao" style="display:none;">
+            <span id="closePopup" class="close">&times;</span>
+            <div class="popUpConteudo">
             <form id="editar_produto_form" onsubmit="editarProduto(event)">
                 <input type="hidden" id="product_id">
                 <label for="product_name">Nome do produto:</label>
                 <input class="formularioEdicao" type="text" id="product_name" name="name">    
                 <label class="formularioEdicao" for="product_price">Preço:</label>
-                <input class="formularioEdicao" type="number" id="product_price" name="price">
+                <input class="formularioEdicao" type="number"step="any" id="product_price" name="price">
                 
                 <label for="product_description">Descrição:</label>
                 <textarea class="formularioEdicao" id="product_description" name="description"></textarea>
@@ -77,23 +107,23 @@
                 
                 <button type="submit">Salvar Alterações</button>
             </form>
-        </div>
+            </div>
+        </div> -->
 
-    
-        
     </div>
 </div>
 
-<div id="card_produto">
-    
+
+
+<div id="cadastrar_produto" style="display:none;"></div>
+
+<div class="card_produto" id="card_produto"></div>
+
+
 </div>
 
+</main>
 
-
-
-           
-
-        </div>
 
 
     </main>
@@ -143,8 +173,7 @@
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="youtube"
                     viewBox="0 0 16 16">
-                    <path
-                        d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
+                    <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="tiktok"
                     viewBox="0 0 16 16">
@@ -173,9 +202,10 @@
         </div>
     </footer>
 
+    
 
+    <script src="/frontend/scripts/carrinho.js"></script>
     <script src="/frontend/scripts/script.js"></script>
     <script src="/frontend/scripts/login.js"></script>
 </body>
-
 </html>

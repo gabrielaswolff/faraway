@@ -196,114 +196,84 @@ app.post('/login', (request, response) => {
 })
 
 
-// CARRINHO
+// CARRINHO 
 
-
-app.post('/carrinho/adicionar', (request, response) => {
-    const { user_id, product_id, quantity } = request.body;
+app.post('/carrinho/adicionar', (req, res) => {
+    const { user_id, product_id, quantity } = req.body;
 
     const checkQuery = 'SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?';
     connection.query(checkQuery, [user_id, product_id], (err, results) => {
         if (err) {
-            console.error('erro', err);
-            return response.status(500).json({ success: false, message: 'erro', data: err });
+            return res.status(500).json({ success: false, message: 'erro na ver' });
         }
-
         if (results.length > 0) {
-            
-            return response.status(400).json({ success: false, message: 'esse produto já está no carrinho' });
-        }
-
-        
-        const query = 'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)';
-        const params = [user_id, product_id, quantity];
-
-        connection.query(query, params, (err, results) => {
-            if (err) {
-                console.error('erro', err);
-                return response.status(500).json({ success: false, message: 'erro', data: err });
-            }
-            response.status(201).json({
-                success: true,
-                message: 'O produto foi adicionado ao carrinho!',
-                data: results
+            const updateQuery = 'UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?';
+            const newQuantity = results[0].quantity + quantity;
+            connection.query(updateQuery, [newQuantity, user_id, product_id], (err, results) => {
+                if (err) {
+                    return res.status(500).json({ success: false, message: 'erro para atualizar' });
+                }
+                res.status(200).json({ success: true, message: 'Esse produto já está em seu carrinho, então a quantidade foi atualizada.' });
             });
-        });
-    });
-});
-
-
-
-
-app.put('/carrinho/editar/:id', (request, response) => {
-    const { id } = request.params;
-    const { quantity } = request.body;
-
-    let query = 'UPDATE cart_items SET quantity = ? WHERE id = ?';
-    let params = [quantity, id];
-
-    connection.query(query, params, (err, results) => {
-        if (err) {
-            console.error('erro na atualização da quantidade', err);
-            return response.status(500).json({ success: false, message: 'erro na atualização' });
+        } else {
+            const insertQuery = 'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)';
+            connection.query(insertQuery, [user_id, product_id, quantity], (err, results) => {
+                if (err) {
+                    return res.status(500).json({ success: false, message: 'não tá dando certo' });
+                }
+                res.status(201).json({ success: true, message: 'produto adicionado ao carrinho' });
+            });
         }
-        response.status(200).json({ success: true, message: 'quantidade atualizada' });
     });
 });
 
 
+
+app.delete('/carrinho/remover/:product_id/:user_id', (req, res) => {
+    const { product_id, user_id } = req.params;
+
+    const query = 'DELETE FROM cart_items WHERE product_id = ? AND user_id = ?';
+    connection.query(query, [product_id, user_id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'erro' });
+        }
+        res.status(200).json({ success: true, message: 'produto removido do carrinho' });
+    });
+});
+
+
+app.put('/carrinho/editar', (req, res) => {
+    const { user_id, product_id, quantity } = req.body;
+
+    const updateQuery = 'UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?';
+    connection.query(updateQuery, [quantity, user_id, product_id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'erro ao atualizar' });
+        }
+        res.status(200).json({ success: true, message: 'quantidade atualizada! sucesso' });
+    });
+});
 
 
 app.get('/carrinho/:user_id', (req, res) => {
     const { user_id } = req.params;
 
-    
+   
     const query = `
-        SELECT ci.id, p.name AS product_name, p.price, ci.quantity, (p.price * ci.quantity) AS total
+        SELECT p.id, p.name, p.price, p.image, ci.quantity
         FROM cart_items ci
         JOIN products p ON ci.product_id = p.id
-        WHERE ci.user_id = ?
+        WHERE ci.user_id = ?;
     `;
 
     connection.query(query, [user_id], (err, results) => {
         if (err) {
-            console.error('erro para listar', err);
-            return res.status(500).json({ success: false, message: 'erro para listar', data: err });
+            return res.status(500).json({ success: false, message: 'erro' });
         }
-
-       
-        if (results.length === 0) {
-            return res.status(404).json({ success: false, message: 'nenhum item foi encontrado ao carrinho' });
-        }
-
-    
-        res.status(200).json({
-            success: true,
-            message: 'sucessoooo',
-            data: results
-        });
+        res.status(200).json({ success: true, data: results });
     });
 });
 
-
-app.delete('/carrinho/remover/:id', (request, response) => {
-    const { id } = request.params;
-
-    let query = 'DELETE FROM cart_items WHERE id = ?';
-    let params = [id];
-
-    connection.query(query, params, (err, results) => {
-        if (err) {
-            console.error('erro na remoção', err);
-            return response.status(500).json({ success: false, message: 'erro na remoção', data: err });
-        }
-        response.status(200).json({
-            success: true,
-            message: 'sucesso',
-            data: results
-        });
-    });
-});
 
 
 // COMPRA 
