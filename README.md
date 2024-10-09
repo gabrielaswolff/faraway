@@ -1,4 +1,4 @@
-A FarAway 2.0 é um site de compras místico com produtos incomuns e únicos. 
+A FarAway é uma loja de compras místicas com produtos incomuns e únicos. 
 Possui funcionalidades como: 
 
 Cadastro e login de usuário;
