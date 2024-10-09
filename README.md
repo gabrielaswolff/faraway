@@ -1,38 +1,54 @@
-O presente projeto utilizou rotas rodadas na porta 3007 e classificadas como: 
+A FarAway 2.0 é um site de compras místico com produtos incomuns e únicos. 
+Possui funcionalidades como: 
 
-Cadastro do Usuário
-Login do Usuário
-Cadastro de produtos (acesso somente por ADMINS)
-Carrinho
+Cadastro e login de usuário;
+Logout de usuário;
+Opções de comprar um produto individualmente ou adicioná-lo ao carrinho de compras;
+Edição dos produtos do carrinho pelo usuário;
+Cadastro e edição de produtos acessíveis apenas pelo ADMIN.
 
-A seguir os exemplos de como acessar as rotas no THUNDER CLIENT
+O banco de dados utilizado em tal projeto é denominado como "FarAway", e foi desenvolvido na plataforma MYSQL.
+Em relação ao ADMIN, cujo é o único usuário com permição para adicionar produtos novos na loja ou editá-los, possui a seguinte conta:
 
+email: admin@gmail.com
+senha: 123
+
+Foram utilizadas rotas de cadastro e login de usuário, cadastro de produtos, carrinho de compras e uma rota apenas para a verificação da 
+compra do usuário. 
+
+ROTAS: 
 
 // CADASTRO DE USUÁRIOS
 
 
-MÉTODO: POST (/usuario/cadastrar)
+MÉTODO: POST - CADASTRAR USUÁRIO
 
-exemplo:
+ROTA: /usuario/cadastrar
+
+body:
 
 {
 “name”: “criarConta”,
 “email”: “criarConta@gmail.com”,
 “password”: “123”,
-“cpf_number”: “7890876789”
-{
+“cpf_number”: “7890876789”   
+}
 
-MÉTODO: GET (/usuarios/listar)
+MÉTODO: GET - LISTAR USUÁRIOS  
 
-exemplo:
+ROTA: /usuarios/listar
+
+body:
 
 {
 “name”: “criarConta”
 }
 
-MÉTODO: PUT (/usuario/editar/:id)
+MÉTODO: PUT - ATUALIZAR USUÁRIO
 
-exemplo:
+ROTA: /usuario/editar/:id
+
+body:
 
 {
   "name": "arroba2",
@@ -40,9 +56,11 @@ exemplo:
   "password": "password"
 }
 
-MÉTODO: DELETE (usuario/deletar/:id)
+MÉTODO: DELETE - DELETAR USUÁRIO
 
-exemplo:
+ROTA: usuario/deletar/:id
+
+body:
 
 {
 
@@ -56,16 +74,20 @@ exemplo:
 // LOGIN DO USUÁRIO
 
 
-MÉTODO: POST LOGIN (/login) 
+MÉTODO: POST - LOGIN 
 
-exemplo:
+ROTA: /login
+
+body:
 
 {
 “email”: “criarConta@gmail.com”,
 “password”: “criarConta”
 }
 
-MÉTODO: POST LOGOUT (/logout)
+MÉTODO: POST - LOGOUT 
+
+ROTA: /logout
 
 exemplo:
 
@@ -77,60 +99,114 @@ exemplo:
 
 // CADASTRO DE PRODUTOS
 
+METÓDO: POST - CADASTRAR PRODUTO  
 
-MÉTODO: POST (/produto/cadastrar)
+ROTA: /produto/cadastrar
 
-{
-“name”: “produto”,
-“description”: “produto para cabelos”,
-“image_url”: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.adrenaline.com.br%2Fgames%2Fminecraft-alcanca-a-marca-de-300-milhoes-de-copias-vendidas%2F&psig=AOvVaw1gIknz3p7bX9yZPfevsnCY&ust=1725719140811000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCuuvbCrogDFQAAAAAdAAAAABAE”,
-“adminPassword”: “senha”
-} 
-
-MÉTODO: GET (/produtos/listar)
+body:
 
 {
-“name”: “produto”
+  "name": "Produto Exemplo",
+  "price": 100.0,
+  "description": "Descrição do produto"
 }
 
-PUT(/produto/editar/:3)
+Essa rota precisa do envio da imagem via multipart/form-data
+
+
+
+MÉTODO: GET - LISTAR PRODUTOS  
+
+ROTA: /produto/editar/:id
+
+body:
 
 {
-“name”: “produto atualizado”
+  "name": "Produto Exemplo",
+  "price": 100.0,
+  "description": "Descrição do produto"
 }
 
 
-MÉTODO: DELETE (/produto/deletar/:id)
 
+MÉTODO: PUT - ATUALIZAR PRODUTO 
+
+ROTA: /produto/editar/:id
+
+body:
 
 {
-“name”: “produto”
+  "name": "Produto Exemplo",
+  "price": 100.0,
+  "description": "Descrição do produto"
 }
 
 
 
-// CARRINHO
+// CARRINHO DE COMPRAS
 
-MÉTODO: POST (/carrinho/adicionar)
+MÉTODO: POST - ADICIONAR PRODUTO AO CARRINHO DO USUÁRIO 
 
-{
-  "user_id": 2,
-  "product_id": 1,
-  "quantity": 2
-}
+ROTA: /carrinho/adicionar
 
-MÉTODO: GET (/carrinho/:user_id)
+body:
 
 {
-  "user_id": 5
+  "user_id": 1,
+  "product_id": 2,
+  "quantity": 3
 }
 
-MÉTODO: DELETE (/carrinho/remover/:id)
+MÉTODO: DELETE - DELETAR PRODUTO DO CARRINHO DO USUÁRIO
+
+ROTA: /carrinho/remover/:product_id/:user_id
+
+body:
 
 {
-  "user_id": 5
+  "user_id": 1,
+  "product_id": 2,
+  "quantity": 5
 }
 
+
+MÉTODO: PUT - ATUALIZAR CARRINHO DO USUÁRIO
+
+ROTA: /carrinho/editar
+
+body:
+
+{
+  "user_id": 1,
+  "product_id": 2,
+  "quantity": 5
+}
+
+
+MÉTODO: GET - LISTAR PRODUTOS DO CARRINHO DO USUÁRIO
+
+ROTA: /carrinho/:user_id
+
+body:
+
+{
+  "email": "usuario@gmail.com",
+  "password": "senha123"
+}
+
+
+// COMPRA DO USUÁRIO
+
+MÉTODO: POST - VERIFICAÇÃO DO EMAIL E SENHA DO USUÁRIO 
+
+ROTA: /verificarCompra
+
+body:
+
+{
+  "email": "usuario@gmail.com",
+  "password": "senha123"
+}
 
 
 
