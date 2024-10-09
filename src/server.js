@@ -258,7 +258,6 @@ app.put('/carrinho/editar', (req, res) => {
 app.get('/carrinho/:user_id', (req, res) => {
     const { user_id } = req.params;
 
-   
     const query = `
         SELECT p.id, p.name, p.price, p.image, ci.quantity
         FROM cart_items ci
@@ -373,23 +372,23 @@ app.put('/produto/editar/:id', upload.single('file'), (req, res) => {
     let params;
 
     if (req.file) {
-        // Se houver nova imagem
+        
         query = 'UPDATE products SET name = ?, price = ?, image = ?, description = ? WHERE id = ?';
         params = [name, price, req.file.filename, description, productId];
     } else {
-        // Sem nova imagem
+
         query = 'UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?';
         params = [name, price, description, productId];
     }
 
     connection.query(query, params, (err, results) => {
         if (err) {
-            return res.status(400).json({ success: false, message: "Erro ao editar produto", error: err });
+            return res.status(400).json({ success: false, message: "erro", error: err });
         }
         if (results.affectedRows > 0) {
-            res.status(200).json({ success: true, message: "Produto atualizado com sucesso", data: results });
+            res.status(200).json({ success: true, message: "produto atualizado", data: results });
         } else {
-            res.status(404).json({ success: false, message: "Produto não encontrado" });
+            res.status(404).json({ success: false, message: "erro" });
         }
     });
 });
@@ -400,7 +399,7 @@ app.delete('/produto/excluir/:id', (request, response) => {
     if (!productId) {
         return response.status(400).json({
             success: false,
-            message: "ID do produto não fornecido."
+            message: "problema no id"
         });
     }
     
@@ -408,10 +407,10 @@ app.delete('/produto/excluir/:id', (request, response) => {
 
     connection.query(query, [productId], (err, results) => {
         if (err) {
-            console.error('Erro ao excluir produto:', err);
+            console.error('erro', err);
             return response.status(500).json({
                 success: false,
-                message: "Erro no servidor ao excluir produto.",
+                message: "erro",
                 error: err.message
             });
         }
@@ -419,13 +418,13 @@ app.delete('/produto/excluir/:id', (request, response) => {
         if (results.affectedRows > 0) {
             response.status(200).json({
                 success: true,
-                message: "Produto excluído com sucesso.",
+                message: "produto excluido. sucesso",
                 data: results
             });
         } else {
             response.status(404).json({
                 success: false,
-                message: "Nenhum produto encontrado para exclusão.",
+                message: "tem que ver isso ai, nao funcionou",
                 data: results
             });
         }

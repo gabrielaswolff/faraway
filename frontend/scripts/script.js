@@ -109,24 +109,4 @@ function carregarPerfil() {
 
 
 
-  // Obter referências aos elementos
-const abrirPopUpBtn = document.getElementById('abrirPopUp'); // referência correta ao botão
-const formulario_edicao = document.getElementById('formulario_edicao');
-const fecharPopUpBtn = document.getElementById('closePopup'); // Fechar botão
-
-// Abrir o pop-up
-abrirPopUpBtn.addEventListener('click', () => {
-    formulario_edicao.style.display = 'flex'; // Mostrar o formulário de edição como flex
-});
-
-// Fechar o pop-up
-fecharPopUpBtn.addEventListener('click', () => {
-    formulario_edicao.style.display = 'none'; // Esconder o formulário de edição
-});
-
-// Fechar o pop-up clicando fora da caixa de conteúdo
-window.addEventListener('click', (event) => {
-    if (event.target === formulario_edicao) {
-        formulario_edicao.style.display = 'none';
-    }
-});
+  

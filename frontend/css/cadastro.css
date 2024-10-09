@@ -32,8 +32,6 @@ header {
     border-radius: 10px;
 
 
-
-
 }
 
 #inicio {
@@ -74,7 +72,7 @@ input {
 }
 
 
-h2 {
+h2{
     text-align: center;
     font-size: 4vh;
     color: #BBD1F0;
@@ -124,17 +122,6 @@ h2 {
 
 }
 
-.ecobag {
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    color: #BBD1F0;
-    transition: background-color 0.3s ease;
-}
-
-.ecobag:hover {
-    color: #4b9cd6;
-}
 
 h1 {
     color: #BBD1F0;

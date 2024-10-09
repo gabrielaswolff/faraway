@@ -48,6 +48,9 @@ function signIn() {
     window.location.href = "/frontend/html/login.html";
 }
 
+function comprarIndex() {
+    window.location.href = "/frontend/html/comprar.html";
+}
 //---------------------------------------------------------------------------------------
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -69,7 +72,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </div>`;
             html.style.display = 'block';
         } else {
-            console.error("Elemento 'informacoes' não encontrado.");
+            console.error("'informacoes' não foi encontrado.");
         }
     }
 });
@@ -127,11 +130,13 @@ async function listarProdutos() {
                     <span class="product-price">R$${product.price}</span>`;
                 
                 if (dados && dados.perfil !== 'admin') {
-                    card += `<button class="button" onclick="adicionarAoCarrinho(${product.id})">Adicionar ao Carrinho</button>`;
+                    card += `
+                    <button class="button" onclick="comprarIndex(event)">Comprar</button>
+                    <button class="button" onclick="adicionarAoCarrinho(${product.id})">Carrinho</button>`;
                 }
 
                 if (dados && dados.perfil === 'admin') {
-                    card += `<button id="abrirPopUp" class="edicaoFormulario" onclick="exibirFormularioEdicao('${product.id}',
+                    card += `<button class="edicaoFormulario" onclick="exibirFormularioEdicao('${product.id}',
                      '${product.name}', ${product.price}, '${product.description}')">Editar</button>
                     <button class="edicaoFormulario" onclick="excluirProduto('${product.id}')">Excluir</button>`;
                 }
@@ -179,7 +184,7 @@ async function editarProduto(event) {
     alert(results.message);
     if (results.success) {
         listarProdutos(); 
-        document.getElementById('formulario_edicao').style.display = 'none'; // Oculta o formulário após a atualização
+        document.getElementById('formulario_edicao').style.display = 'none'; 
     }
 }
 
@@ -198,103 +203,3 @@ async function excluirProduto(id) {
     }
 }
 
-// ---------------------------------------------------------------
-
-// async function listarProdutos() {
-//     const response = await fetch('http://localhost:3004/produtos/listar', {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     });
-
-//     const results = await response.json();
-
-//     if (results.success) {
-//         let productData = results.data;
-//         const images = 'http://localhost:3004/uploads/';
-//         let html = document.getElementById('card_produto');
-        
-//         if (html) {
-//             html.innerHTML = ""; // Limpa o conteúdo anterior
-
-//             let dados = JSON.parse(localStorage.getItem('informacoes'));
-//             productData.forEach(product => {
-//                 let card = `<div class="cards">
-//                     <img src="${images + product.image}" alt="${product.name}">
-//                     <p>${product.name}</p>
-//                     <span class="product-price">R$${product.price}</span>`;
-
-//                 if (dados && dados.perfil !== 'admin') {
-//                     card += `<button class="button" onclick="adicionarAoCarrinho(${product.id})">Adicionar ao Carrinho</button>`;
-//                 }
-
-//                 if (dados && dados.perfil === 'admin') {
-//                     card += `<button class="edicaoFormulario" onclick="exibirFormularioEdicao('${product.id}', '${product.name}', ${product.price}, '${product.description}')">Editar</button>
-//                     <button class="edicaoFormulario" onclick="excluirProduto('${product.id}')">Excluir</button>`;
-//                 }
-
-//                 card += `</div>`;
-//                 html.innerHTML += card;
-//             });
-//         } else {
-//             console.error("Elemento 'card_produto' não encontrado.");
-//         }
-//     } else {
-//         alert(results.message);
-//     }
-// }
-
-
-// async function removerDoCarrinho(productId) {
-//     const userInfo = JSON.parse(localStorage.getItem('informacoes'));
-//     const userId = userInfo.user_id;
-
-//     const response = await fetch(`http://localhost:3004/carrinho/remover/${productId}/${userId}`, {
-//         method: "DELETE",
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     });
-
-//     const result = await response.json();
-//     if (result.success) {
-//         alert("Produto removido do carrinho.");
-//         carregarCarrinho(); // Atualiza a lista de itens no carrinho
-//     } else {
-//         alert("Erro ao remover produto.");
-//     }
-// }
-
-// async function adicionarAoCarrinho(productId) {
-//     const userInfo = JSON.parse(localStorage.getItem('informacoes')); 
-    
-//     if (!userInfo || !userInfo.user_id) {
-//         alert("Você precisa estar logado para adicionar produtos ao carrinho.");
-//         window.location.href = "/frontend/html/login.html";
-//         return;
-//     }
-
-//     const userId = userInfo.user_id;  // Pega o ID do usuário
-//     const quantidade = 1;  // Define a quantidade padrão ao adicionar
-
-//     const response = await fetch("http://localhost:3004/carrinho/adicionar", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             user_id: userId,
-//             product_id: productId,
-//             quantity: quantidade
-//         })
-//     });
-
-//     const result = await response.json();
-
-//     if (result.success) {
-//         alert("Produto adicionado ao carrinho!");
-//     } else {
-//         alert("Erro ao adicionar o produto ao carrinho.");
-//     }
-// }

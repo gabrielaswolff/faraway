@@ -28,100 +28,59 @@ main{
     width: 100%; 
 }
 
-#carrinho-itens {
-    display: flex; 
-    flex-wrap: wrap;
-    justify-content: flex-start; 
-    gap: 2vh; 
-    padding: 2vh;
-    width: 100%; 
+.carrinho-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #b0c8ed;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
 }
 
-.item-carrinho {
-    color: #031237;
+.carrinho-item img{
+    width: 80px; 
+    height: auto;
+    margin-right: 20px;
+}
+
+.carrinho-item p{
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.carrinho-item input{
+    width: 40px;
+    text-align: center;
+}
+
+.carrinho-item button{
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.carrinho-item button:hover{
+    background-color: #ff3333;
+}
+
+h1{
+    text-align: center;
+}
+
+.embaixo{
     display: flex;
-    flex-direction: column; 
+    justify-content: space-between;
     align-items: center;
     background-color: #BBD1F0;
-    padding: 2vh;
-    margin: 1vh;
-    border-radius: 10px;
-    min-width: 200px;
-    max-width: 200px; 
-    text-align: center;
-    flex: 1 1 200px; 
+    padding: 10vh;
+    border-radius: 2vh;
+    margin-top: 20px;
+    width: 100%;
+    margin-left: 70vh;
+    margin-right: 70vh;
 }
-
-.removerBotao {
-    margin-top: 2vh;
-    cursor: pointer;
-    color: white;
-    border-radius: 1px;
-    border-color: white;
-    background-color: red;
-    transition: background-color 0.3s ease;
-    padding: 2vh 4vh;
-    font-size: 2vh;
-    border-radius: 10px;
-}
-
-.removerBotao:hover {
-    background-color: rgb(171, 0, 0);
-}
-
-.total-carrinho{
-    color: #BBD1F0;
-}
-
-.quantidade{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    height: 5vh;
-    overflow: hidden;
-}
-
-.quantidade-input{
-    width: 5vh;
-    height: 10vh;
-    text-align: center;
-    border-color: #111D3B;
-    outline: none;
-    font-size: 2vh;
-    color: #111D3B;
-}
-
-.quantidadeMenos{
-    background-color: #111D3B;
-    border-color: #031237;
-    padding: 0 2vh;
-    cursor: pointer;
-    font-size: 3vh ;
-    height: 100%;
-    color: #BBD1F0;
-}
-
-.quantidadeMais{
-    background-color: #111D3B;
-    border-color: #111D3B;
-    padding: 0 2vh;
-    cursor: pointer;
-    font-size: 3vh ;
-    height: 100%;
-    color: #BBD1F0;
-}
-
-.quantidadeMais:hover{
-    background-color: #07215e;
-}
-
-.quantidadeMenos:hover{
-    background-color: #07215e;
-}
-
-.totalCarrinho{
-    color: #BBD1F0;
-}
-
