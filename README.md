@@ -1,228 +1,244 @@
-A FarAway é uma loja de compras místicas com produtos incomuns e únicos. 
-Possui funcionalidades como: 
+# 🪐 FarAway
 
-Cadastro e login de usuário;
-Logout de usuário;
-Opções de comprar um produto individualmente ou adicioná-lo ao carrinho de compras;
-Edição dos produtos do carrinho pelo usuário;
-Cadastro e edição de produtos acessíveis apenas pelo ADMIN.
+## 📌 Sobre o Projeto
 
-O banco de dados utilizado em tal projeto é denominado como "FarAway", e foi desenvolvido na plataforma MYSQL.
-Em relação ao ADMIN, cujo é o único usuário com permição para adicionar produtos novos na loja ou editá-los, possui a seguinte conta:
+**FarAway** é uma loja virtual de compras místicas, focada em produtos incomuns e únicos. O projeto foi desenvolvido como uma aplicação **Fullstack**, oferecendo uma experiência completa de e-commerce com autenticação de usuários, carrinho de compras e gerenciamento de produtos.
 
-email: admin@gmail.com
-senha: 123
+O sistema conta com dois tipos de usuários:
 
-Foram utilizadas rotas de cadastro e login de usuário, cadastro de produtos, carrinho de compras e uma rota apenas para a verificação da 
-compra do usuário. 
+* **Usuário comum**: pode se cadastrar, fazer login, adicionar produtos ao carrinho e realizar compras.
+* **Administrador (ADMIN)**: possui permissões exclusivas para cadastrar e editar produtos da loja.
 
-ROTAS: 
+---
 
-// CADASTRO DE USUÁRIOS
+## ⚙️ Funcionalidades
 
+* Cadastro e login de usuários
+* Logout de usuário
+* Listagem de produtos
+* Compra direta de produtos
+* Carrinho de compras por usuário
+* Edição de itens do carrinho (quantidade e remoção)
+* Cadastro e edição de produtos (apenas ADMIN)
+* Verificação de compra via autenticação
 
-MÉTODO: POST - CADASTRAR USUÁRIO
+---
 
-ROTA: /usuario/cadastrar
+## 🛠️ Tecnologias Utilizadas
 
-body:
+### Backend
 
+* Node.js
+* Express.js
+* MySQL
+* Multer (upload de imagens)
+
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+---
+
+## 🗄️ Banco de Dados
+
+O banco de dados utilizado chama-se **`FarAway`**, desenvolvido em **MySQL**.
+
+Tabelas principais:
+
+* `users`
+* `products`
+* `cart_items`
+
+---
+
+## 👑 Conta de Administrador
+
+> ⚠️ **Apenas o ADMIN pode cadastrar ou editar produtos**
+
+Credenciais padrão:
+
+* **Email:** [admin@gmail.com](mailto:admin@gmail.com)
+* **Senha:** 123
+
+---
+
+## 🔐 Autenticação
+
+O sistema utiliza rotas específicas para:
+
+* Cadastro de usuários
+* Login e logout
+* Verificação de compra
+
+---
+
+## 📡 Rotas da API
+
+### 👤 Usuários
+
+#### ➕ Cadastrar Usuário
+
+* **Método:** POST
+* **Rota:** `/usuario/cadastrar`
+
+```json
 {
-“name”: “criarConta”,
-“email”: “criarConta@gmail.com”,
-“password”: “123”,
-“cpf_number”: “7890876789”   
+  "name": "CriarConta",
+  "email": "criarConta@gmail.com",
+  "password": "123",
+  "cpf_number": "7890876789"
 }
+```
 
-MÉTODO: GET - LISTAR USUÁRIOS  
+#### 📄 Listar Usuários
 
-ROTA: /usuarios/listar
+* **Método:** GET
+* **Rota:** `/usuarios/listar`
 
-body:
+#### ✏️ Atualizar Usuário
 
-{
-“name”: “criarConta”
-}
+* **Método:** PUT
+* **Rota:** `/usuario/editar/:id`
 
-MÉTODO: PUT - ATUALIZAR USUÁRIO
-
-ROTA: /usuario/editar/:id
-
-body:
-
+```json
 {
   "name": "arroba2",
   "email": "arroba@gmail.com",
   "password": "password"
 }
+```
 
-MÉTODO: DELETE - DELETAR USUÁRIO
+#### ❌ Deletar Usuário
 
-ROTA: usuario/deletar/:id
+* **Método:** DELETE
+* **Rota:** `/usuario/deletar/:id`
 
-body:
+---
 
+### 🔑 Login
+
+#### 🔓 Login do Usuário
+
+* **Método:** POST
+* **Rota:** `/login`
+
+```json
 {
-
-  "name": "CriarConta",
-  "email": “CriarConta@gmail.com
+  "email": "criarConta@gmail.com",
+  "password": "criarConta"
 }
+```
 
+#### 🔒 Logout
 
+* **Método:** POST
+* **Rota:** `/logout`
 
+---
 
-// LOGIN DO USUÁRIO
+### 📦 Produtos
 
+#### ➕ Cadastrar Produto (ADMIN)
 
-MÉTODO: POST - LOGIN 
+* **Método:** POST
+* **Rota:** `/produto/cadastrar`
 
-ROTA: /login
-
-body:
-
-{
-“email”: “criarConta@gmail.com”,
-“password”: “criarConta”
-}
-
-MÉTODO: POST - LOGOUT 
-
-ROTA: /logout
-
-exemplo:
-
-{
-“email”: “criarConta@gmail.com”,
-“password”: “criarConta”
-}
-
-
-// CADASTRO DE PRODUTOS
-
-METÓDO: POST - CADASTRAR PRODUTO  
-
-ROTA: /produto/cadastrar
-
-body:
-
+```json
 {
   "name": "Produto Exemplo",
   "price": 100.0,
   "description": "Descrição do produto"
 }
+```
 
-Essa rota precisa do envio da imagem via multipart/form-data
+> ⚠️ Esta rota requer envio de imagem via **multipart/form-data**
 
+#### 📄 Listar Produtos
 
+* **Método:** GET
+* **Rota:** `/produto/listar`
 
-MÉTODO: GET - LISTAR PRODUTOS  
+#### ✏️ Editar Produto (ADMIN)
 
-ROTA: /produto/editar/:id
+* **Método:** PUT
+* **Rota:** `/produto/editar/:id`
 
-body:
-
+```json
 {
   "name": "Produto Exemplo",
   "price": 100.0,
   "description": "Descrição do produto"
 }
+```
 
+---
 
+### 🛒 Carrinho de Compras
 
-MÉTODO: PUT - ATUALIZAR PRODUTO 
+#### ➕ Adicionar Produto ao Carrinho
 
-ROTA: /produto/editar/:id
+* **Método:** POST
+* **Rota:** `/carrinho/adicionar`
 
-body:
-
-{
-  "name": "Produto Exemplo",
-  "price": 100.0,
-  "description": "Descrição do produto"
-}
-
-
-
-// CARRINHO DE COMPRAS
-
-MÉTODO: POST - ADICIONAR PRODUTO AO CARRINHO DO USUÁRIO 
-
-ROTA: /carrinho/adicionar
-
-body:
-
+```json
 {
   "user_id": 1,
   "product_id": 2,
   "quantity": 3
 }
+```
 
-MÉTODO: DELETE - DELETAR PRODUTO DO CARRINHO DO USUÁRIO
+#### ❌ Remover Produto do Carrinho
 
-ROTA: /carrinho/remover/:product_id/:user_id
+* **Método:** DELETE
+* **Rota:** `/carrinho/remover/:product_id/:user_id`
 
-body:
+#### ✏️ Atualizar Quantidade do Produto
 
+* **Método:** PUT
+* **Rota:** `/carrinho/editar`
+
+```json
 {
   "user_id": 1,
   "product_id": 2,
   "quantity": 5
 }
+```
 
+#### 📄 Listar Carrinho do Usuário
 
-MÉTODO: PUT - ATUALIZAR CARRINHO DO USUÁRIO
+* **Método:** GET
+* **Rota:** `/carrinho/:user_id`
 
-ROTA: /carrinho/editar
+---
 
-body:
+### 💳 Compra
 
-{
-  "user_id": 1,
-  "product_id": 2,
-  "quantity": 5
-}
+#### ✔️ Verificação de Compra
 
+* **Método:** POST
+* **Rota:** `/verificarCompra`
 
-MÉTODO: GET - LISTAR PRODUTOS DO CARRINHO DO USUÁRIO
-
-ROTA: /carrinho/:user_id
-
-body:
-
+```json
 {
   "email": "usuario@gmail.com",
   "password": "senha123"
 }
+```
 
+---
 
-// COMPRA DO USUÁRIO
+## 📌 Observações Finais
 
-MÉTODO: POST - VERIFICAÇÃO DO EMAIL E SENHA DO USUÁRIO 
+* Este projeto tem fins educacionais
+* Não utiliza criptografia de senha (bcrypt)
+* Ideal para estudos de autenticação, CRUD e relacionamento com banco de dados
 
-ROTA: /verificarCompra
+---
 
-body:
+## ✨ Autoria
 
-{
-  "email": "usuario@gmail.com",
-  "password": "senha123"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+© 2026 — **FarAway Project**
